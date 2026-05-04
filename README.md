@@ -16,7 +16,7 @@ Backend API sederhana untuk Sistem Absensi menggunakan Laravel 13. Project ini m
 
 ### 1. Clone the repository
 ```bash
-git clone <repo-url>
+git clone https://github.com/yukienjoyer7/245150701111011-DionisiusSerafSaputra-utptis.git
 cd 245150701111011-DionisiusSerafSaputra-utptis
 ```
 
