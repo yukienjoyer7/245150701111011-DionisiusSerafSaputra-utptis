@@ -3,10 +3,6 @@
     "info": {
         "title": "Sistem Absensi API",
         "description": "API untuk sistem absensi mahasiswa/karyawan menggunakan Laravel tanpa database.",
-        "contact": {
-            "name": "Dionisius Seraf Saputra",
-            "email": "readsnu@absensi.com"
-        },
         "version": "1.0.0"
     },
     "servers": [
@@ -16,6 +12,290 @@
         }
     ],
     "paths": {
+        "/api/attendances": {
+            "get": {
+                "tags": [
+                    "Attendance"
+                ],
+                "summary": "Ambil semua data absensi",
+                "operationId": "f7564e4f8fdec50c27cf2a372050327d",
+                "responses": {
+                    "200": {
+                        "description": "Data absensi berhasil diambil"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Attendance"
+                ],
+                "summary": "Tambah data absensi baru",
+                "operationId": "3bb1ac6de1eb26f4dd68ec47de293f0f",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "name",
+                                    "date",
+                                    "status"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "example": "Sakura no Uta"
+                                    },
+                                    "date": {
+                                        "type": "string",
+                                        "example": "2026-05-04"
+                                    },
+                                    "status": {
+                                        "type": "string",
+                                        "example": "hadir",
+                                        "enum": [
+                                            "hadir",
+                                            "izin",
+                                            "sakit",
+                                            "alpa"
+                                        ]
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Data absensi berhasil ditambahkan"
+                    },
+                    "422": {
+                        "description": "Validasi gagal"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/attendances/{id}": {
+            "get": {
+                "tags": [
+                    "Attendance"
+                ],
+                "summary": "Ambil detail absensi berdasarkan ID",
+                "operationId": "93fd498c5bf6c3f35400901934933877",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "example": 1
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Data absensi berhasil diambil"
+                    },
+                    "404": {
+                        "description": "Data absensi tidak ditemukan"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "put": {
+                "tags": [
+                    "Attendance"
+                ],
+                "summary": "Update seluruh data absensi berdasarkan ID",
+                "operationId": "3af8c4bee0fbdf9530f0cc5818275c8e",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "example": 1
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "name",
+                                    "date",
+                                    "status"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "example": "Sakura no Uta"
+                                    },
+                                    "date": {
+                                        "type": "string",
+                                        "example": "2026-05-04"
+                                    },
+                                    "status": {
+                                        "type": "string",
+                                        "example": "izin",
+                                        "enum": [
+                                            "hadir",
+                                            "izin",
+                                            "sakit",
+                                            "alpa"
+                                        ]
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Data absensi berhasil diperbarui"
+                    },
+                    "404": {
+                        "description": "Data absensi tidak ditemukan"
+                    },
+                    "422": {
+                        "description": "Validasi gagal"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "Attendance"
+                ],
+                "summary": "Hapus data absensi berdasarkan ID",
+                "operationId": "3b1350863e6c4643d660bad18a27d91e",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "example": 1
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Data absensi berhasil dihapus"
+                    },
+                    "404": {
+                        "description": "Data absensi tidak ditemukan"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "patch": {
+                "tags": [
+                    "Attendance"
+                ],
+                "summary": "Update status absensi berdasarkan ID",
+                "operationId": "3181c2b7e43686b020a6a93328b0b53a",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "example": 1
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "status"
+                                ],
+                                "properties": {
+                                    "status": {
+                                        "type": "string",
+                                        "example": "sakit",
+                                        "enum": [
+                                            "hadir",
+                                            "izin",
+                                            "sakit",
+                                            "alpa"
+                                        ]
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Status absensi berhasil diperbarui"
+                    },
+                    "404": {
+                        "description": "Data absensi tidak ditemukan"
+                    },
+                    "422": {
+                        "description": "Validasi gagal"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
         "/api/login": {
             "post": {
                 "tags": [
@@ -68,6 +348,10 @@
         }
     },
     "tags": [
+        {
+            "name": "Attendance",
+            "description": "Attendance"
+        },
         {
             "name": "Auth",
             "description": "Auth"
