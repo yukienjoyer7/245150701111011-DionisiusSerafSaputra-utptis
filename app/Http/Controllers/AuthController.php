@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use Tymon\JWTAuth\Facades\JWTAuth;
 use App\Models\User;
+use Illuminate\Http\Request;
+use OpenApi\Attributes as OA;
+use Tymon\JWTAuth\Facades\JWTAuth;
 
 class AuthController extends Controller
 {
@@ -23,6 +24,25 @@ class AuthController extends Controller
         ],
     ];
 
+    #[OA\Post(
+        path: '/api/login',
+        summary: 'Login dan dapatkan JWT token',
+        tags: ['Auth'],
+        requestBody: new OA\RequestBody(
+            required: true,
+            content: new OA\JsonContent(
+                required: ['email', 'password'],
+                properties: [
+                    new OA\Property(property: 'email', type: 'string', example: 'readsnu@absensi.com'),
+                    new OA\Property(property: 'password', type: 'string', example: 'password123'),
+                ]
+            )
+        ),
+        responses: [
+            new OA\Response(response: 200, description: 'Login berhasil'),
+            new OA\Response(response: 401, description: 'Email atau password salah'),
+        ]
+    )]
     public function login(Request $request)
     {
         $request->validate([
@@ -39,13 +59,13 @@ class AuthController extends Controller
 
         $user = collect(self::$users)->firstWhere('email', $request->email);
 
-        if (!$user || $user['password'] !== $request->password) {
+        if (! $user || $user['password'] !== $request->password) {
             return response()->json([
                 'message' => 'Email atau password salah.',
             ], 401);
         }
 
-        $userModel = new User();
+        $userModel = new User;
         $userModel->id = $user['id'];
         $userModel->name = $user['name'];
         $userModel->email = $user['email'];
